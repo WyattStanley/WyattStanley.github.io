@@ -37,6 +37,6 @@ I am a seniorr, majoring in <a href="https://geography.washington.edu">Geography
     <a href="https://www.washington.edu/ima/intramurals/">UW Soccer</a> Intramurals
 </h4>
 
-- Presentations 
-- Group Projects
-- Planning Hackathon
+- Teamwork
+- Exercise
+- Fun
