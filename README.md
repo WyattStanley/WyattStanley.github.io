@@ -1,3 +1,3 @@
 # WyattStanley.github.io
-
-My Wiki Page
+GEOG 458 Lab 1
+Online Resume
