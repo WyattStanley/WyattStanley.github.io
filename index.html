@@ -29,7 +29,9 @@
         <!-- Header - set the background image for the header in the line below-->
         <header class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/wfh8dDlNFOk/1600x900')">
             <div class="text-center my-5">
-                <img class="img-fluid rounded-circle mb-4" src="https://dummyimage.com/150x150/6c757d/dee2e6.jpg" alt="..." />
+                <img class="img-fluid rounded-circle mb-4" src="assets/wyatt.png" alt="Wyatt Image" style="object-fit: cover; width: 200px; height: 200px; border-radius: 50%;" />
+
+
                 <h1 class="text-white fs-3 fw-bolder">Project Gallary</h1>
                 <p class="text-white-50 mb-0">Wyatt Stanely</p>
             </div>
@@ -46,17 +48,753 @@
                 </div>
             </div>
         </section>
-        <!-- Image 1-->
-        <div class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/4ulffa6qoKA/1200x800')">
-            <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
-            <div style="height: 20rem"></div>
+
+        <!-- Interactive map 1
+
+        <head>
+            <meta charset="utf-8">
+            <title>Interactive Web Mapping</title>
+            <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+            <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+            <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+            <style>
+                h2, h3 {
+                    margin: 10px;
+                    font-size: 18px;
+                }
+
+                h3 {
+                    font-size: 16px;
+                }
+
+                p {
+                    margin: 10px;
+                }
+
+                #map {
+                    position: relative;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                }
+
+                .map-overlay {
+                    position: relative;
+                    bottom: 0;
+                    left: 0;
+                    background: rgba(255, 255, 255, 0.8);
+                    border-style: solid;
+                    border-width: 1px;
+                    border-color: rgba(0, 0, 0, 0.2);
+                    margin-left: 20px;
+                    font-family: Arial, sans-serif;
+                    overflow: auto;
+                    border-radius: 3px;
+                }
+
+                #features {
+                    top: 0;
+                    height: 100px;
+                    margin-top: 20px;
+                    width: 250px;
+                }
+
+                #legend {
+                    padding: 10px;
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+                    line-height: 18px;
+                    height: 210px;
+                    margin-bottom: 40px;
+                    width: 150px;
+                }
+
+                .legend-key {
+                    display: inline-block;
+                    border-radius: 20%;
+                    width: 10px;
+                    height: 10px;
+                    margin-right: 5px;
+                }
+
+                .mapboxgl-canvas-container.mapboxgl-interactive,
+                .mapboxgl-ctrl-group button.mapboxgl-ctrl-compass {
+                    cursor: unset;
+                }
+            </style>
+        </head>
+
+        <body>
+            <div id="map"></div>
+            <div class='map-overlay' id='features'>
+                <h2>US population density</h2>
+                <div id='text-description'>
+                    <p>Hover over a state!</p>
+                </div>
+            </div>
+            <div class='map-overlay' id='legend'></div>
+            <script>
+                // initialize basemmap
+                mapboxgl.accessToken =
+                    'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+                const map = new mapboxgl.Map({
+                    container: 'map', // container ID
+                    style: 'mapbox://styles/mapbox/light-v10', // style URL
+                    zoom: 3, // starting zoom
+                    center: [-100, 40] // starting center
+                });
+
+                // load data and add as layer
+                async function geojsonFetch() {
+                    let response = await fetch('assets/state_data.geojson');
+                    let state_data = await response.json();
+
+                    map.on('load', function loadingData() {
+                        map.addSource('state_data', {
+                            type: 'geojson',
+                            data: state_data
+                        });
+
+                        map.addLayer({
+                            'id': 'state_data_layer',
+                            'type': 'fill',
+                            'source': 'state_data',
+                            'paint': {
+                                'fill-color': [
+                                    'step',
+                                    ['get', 'density'],
+                                    '#FFEDA0',   // stop_output_0
+                                    10,          // stop_input_0
+                                    '#FED976',   // stop_output_1
+                                    20,          // stop_input_1
+                                    '#FEB24C',   // stop_output_2
+                                    50,          // stop_input_2
+                                    '#FD8D3C',   // stop_output_3
+                                    100,         // stop_input_3
+                                    '#FC4E2A',   // stop_output_4
+                                    200,         // stop_input_4
+                                    '#E31A1C',   // stop_output_5
+                                    500,         // stop_input_5
+                                    '#BD0026',   // stop_output_6
+                                    1000,        // stop_input_6
+                                    "#800026"    // stop_output_7
+                                ],
+                                'fill-outline-color': '#BBBBBB',
+                                'fill-opacity': 0.7,
+                            }
+                        });
+
+                        const layers = [
+                            '0-9',
+                            '10-19',
+                            '20-49',
+                            '50-99',
+                            '100-199',
+                            '200-499',
+                            '500-999',
+                            '1000 and more'
+                        ];
+                        const colors = [
+                            '#FFEDA070',
+                            '#FED97670',
+                            '#FEB24C70',
+                            '#FD8D3C70',
+                            '#FC4E2A70',
+                            '#E31A1C70',
+                            '#BD002670',
+                            '#80002670'
+                        ];
+
+                        // legend
+                        const legend = document.getElementById('legend');
+                        legend.innerHTML = "<b>Population Density<br>(people/sq.mi.)</b><br><br>";
+
+
+                        layers.forEach((layer, i) => {
+                            const color = colors[i];
+                            const item = document.createElement('div');
+                            const key = document.createElement('span');
+                            key.className = 'legend-key';
+                            key.style.backgroundColor = color;
+
+                            const value = document.createElement('span');
+                            value.innerHTML = `${layer}`;
+                            item.appendChild(key);
+                            item.appendChild(value);
+                            legend.appendChild(item);
+                        });
+                    });
+
+                    map.on('mousemove', ({point}) => {
+                        const state = map.queryRenderedFeatures(point, {
+                            layers: ['state_data_layer']
+                        });
+                        document.getElementById('text-description').innerHTML = state.length ?
+                            `<h3>${state[0].properties.name}</h3><p><strong><em>${state[0].properties.density}</strong> people per square mile</em></p>` :
+                            `<p>Hover over a state!</p>`;
+                    });
+                }
+
+                // GeoJSON data and load the map
+                geojsonFetch();
+            </script>
+
+        </body> -->
+
+    
+        <!-- Interactive map 1 -->
+
+        <head>
+            <meta charset="utf-8">
+            <title>Active Volcanos</title>
+            <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+            <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
+            <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                    background-color: rgb(252, 252, 255);
+                }
+
+                #container {
+                    display: flex;
+                    height: 100vh;
+                    flex-direction: row;
+                    align-items: stretch;
+        
+                }
+
+                #side-panel {
+                    flex-basis: 500px;
+                    overflow-y: scroll;
+                }       
+
+                #map {
+                    flex-grow: 1;
+
+                }
+                
+                table {
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    width: 100%;
+                    border: 1px solid #ffffff;
+                }
+
+                th,
+                td {
+                    text-align: left;
+                    padding: 16px;
+                    color: #05052d;
+
+                }
+
+                tr:nth-child(even) {
+                    background-color: #e6e6e6;
+                }
+
+                tr:nth-child(odd) {
+                    background-color: #ffffff;
+                }
+
+                @media (max-width: 1024px) {
+                    #side-panel {
+                        display: none;
+                    }
+                }
+
+            </style>
+        </head> 
+        
+            <body>
+                <main id="container">
+                    <div id="side-panel">
+                        <center>
+                            <h2>Hawaii - Active Volcanos</h2>
+                        </center>
+                        
+                        <button id="sort-button">Sort by Threat Potential</button>
+        
+                        <table>
+                            <tr>
+                                <th>name</th>
+                                <th>threat potential</th>
+                                <th>advisoty</th>
+                            </tr>
+                        </table>
+        
+                    </div>
+                    <div id="map"></div>
+
+                </main>
+                <script>
+                    mapboxgl.accessToken = 'pk.eyJ1Ijoid3lhdHRzdGFubGV5IiwiYSI6ImNsb2V2eHRrMDBodjIya3BlaXpnbGVmbzMifQ.4d9Kim_-fosnpZmJiyWoLg'
+                    
+                    let map = new mapboxgl.Map({
+                        container: 'map', // container ID
+                        style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+                        zoom: 6, // starting zoom
+                        center: [-157, 21] // starting center
+                    });
+
+
+                    async function geojsonFetch() {
+
+                        let response, volcanos, hawaii, table;
+                        response = await fetch('assets/Volcanos.geojson');
+                        volcanos = await response.json();
+                        response = await fetch('assets/Hawaii.geojson');
+                        hawaii = await response.json();
+
+                        table = document.getElementsByTagName("table")[0];
+                        let row, cell1, cell2, cell3;
+                        for (let i = 0; i < volcanos.features.length; i++) {
+                            // Create an empty <tr> element and add it to the 1st position of the table:
+                            row = table.insertRow(-1);
+                            cell1 = row.insertCell(0);
+                            cell2 = row.insertCell(1);
+                            cell3 = row.insertCell(2);
+                                cell1.innerHTML = volcanos.features[i].properties.name;
+                            cell2.innerHTML = volcanos.features[i].properties.threat_potential;
+                            cell3.innerHTML = volcanos.features[i].properties.advisory;
+                        }
+
+                        //load data to the map as new layers and table on the side.
+                        map.on('load', function loadingData() {
+
+                            map.addSource('hawaii', {
+                                type: 'geojson',
+                                data: hawaii
+                            });
+
+                            map.addLayer({
+                                'id': 'hawaii-layer',
+                                'type': 'fill',
+                                'source': 'hawaii',
+                                'paint': {
+                                    'fill-color': 'green', // blue color fill
+                                    'fill-opacity': 0.5
+                                }
+                            });
+
+                            map.addSource('volcanos', {
+                                type: 'geojson',
+                                data: volcanos
+                            });
+
+                            map.addLayer({
+                                'id': 'volcanos-layer',
+                                'type': 'circle',
+                                'source': 'volcanos',
+                                'paint': {
+                                    'circle-radius': 5,
+                                    'circle-stroke-width': 4,
+                                    'circle-color': 'red',
+                                    'circle-stroke-color': 'brown'
+                                }
+                            });
+                        });
+
+                    }
+
+                    geojsonFetch();  
+
+                    const sortButton = document.getElementById("sort-button");
+
+                    sortButton.addEventListener('click', sortTable);
+
+                    function sortTable() {
+                        const table = document.querySelector("table");
+                        const rows = Array.from(table.rows).slice(1); // Exclude the header row
+
+                        const threatOrder = {
+                            "Unassigned": 3,
+                            "Moderate": 2,
+                            "High": 1,
+                            "Very High": 0
+                        };
+
+                        rows.sort((a, b) => {
+                            const threatA = a.cells[1].textContent;
+                            const threatB = b.cells[1].textContent;
+
+                            if (threatOrder[threatA] < threatOrder[threatB]) {
+                                return -1;
+                            }
+                            if (threatOrder[threatA] > threatOrder[threatB]) {
+                                return 1;
+                            }
+                            return 0;
+                        });
+
+                        // Clear the table
+                        while (table.rows.length > 1) {
+                            table.deleteRow(1);
+                        }
+
+                        // Append the sorted rows to the table
+                        rows.forEach((row) => {
+                            table.appendChild(row);
+                        });
+                    }
+                </script>
+            </body>   
+        <html>
+
+
+        <!-- Glacier Comparison Description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>ArcGIS</h2>
+                        <p class="lead">I made these two maps below using ArcGIS. The maps are of the same space but represent two periods of time, 2017 and 2022. These maps show a dramatic change in the size of a glacier in Alaska. To create this comparison I used ArcGIS’s land cover website and was able to choose two years to explore.  After downloading the data, I was able to turn it into polygons. From there I seperated the data into ice and water polygons. I then sylized it too blend in with the base map.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+
+        <!-- Glacier Comparison -->
+
+        <html>
+            <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <style>
+            * {box-sizing: border-box;}
+            
+            .img-comp-container {
+              position: relative;
+              height: 1000px; /*should be the same height as the images*/
+            }
+            
+            .img-comp-img {
+              position: absolute;
+              width: auto;
+              height: auto;
+              overflow:hidden;
+            }
+            
+            .img-comp-img img {
+              display:block;
+              vertical-align:middle;
+            }
+            
+            .img-comp-slider {
+              position: absolute;
+              z-index:9;
+              cursor: ew-resize;
+              /*set the appearance of the slider:*/
+              width: 40px;
+              height: 40px;
+              background-color: #2196F3;
+              opacity: 0.7;
+              border-radius: 50%;
+            }
+            </style>
+            <script>
+            function initComparisons() {
+              var x, i;
+              /*find all elements with an "overlay" class:*/
+              x = document.getElementsByClassName("img-comp-overlay");
+              for (i = 0; i < x.length; i++) {
+                /*once for each "overlay" element:
+                pass the "overlay" element as a parameter when executing the compareImages function:*/
+                compareImages(x[i]);
+              }
+              function compareImages(img) {
+                var slider, img, clicked = 0, w, h;
+                /*get the width and height of the img element*/
+                w = img.offsetWidth;
+                h = img.offsetHeight;
+                /*set the width of the img element to 50%:*/
+                img.style.width = (w / 2) + "px";
+                /*create slider:*/
+                slider = document.createElement("DIV");
+                slider.setAttribute("class", "img-comp-slider");
+                /*insert slider*/
+                img.parentElement.insertBefore(slider, img);
+                /*position the slider in the middle:*/
+                slider.style.top = (h / 2) - (slider.offsetHeight / 2) + "px";
+                slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+                /*execute a function when the mouse button is pressed:*/
+                slider.addEventListener("mousedown", slideReady);
+                /*and another function when the mouse button is released:*/
+                window.addEventListener("mouseup", slideFinish);
+                /*or touched (for touch screens:*/
+                slider.addEventListener("touchstart", slideReady);
+                /*and released (for touch screens:*/
+                window.addEventListener("touchend", slideFinish);
+                function slideReady(e) {
+                  /*prevent any other actions that may occur when moving over the image:*/
+                  e.preventDefault();
+                  /*the slider is now clicked and ready to move:*/
+                  clicked = 1;
+                  /*execute a function when the slider is moved:*/
+                  window.addEventListener("mousemove", slideMove);
+                  window.addEventListener("touchmove", slideMove);
+                }
+                function slideFinish() {
+                  /*the slider is no longer clicked:*/
+                  clicked = 0;
+                }
+                function slideMove(e) {
+                  var pos;
+                  /*if the slider is no longer clicked, exit this function:*/
+                  if (clicked == 0) return false;
+                  /*get the cursor's x position:*/
+                  pos = getCursorPos(e)
+                  /*prevent the slider from being positioned outside the image:*/
+                  if (pos < 0) pos = 0;
+                  if (pos > w) pos = w;
+                  /*execute a function that will resize the overlay image according to the cursor:*/
+                  slide(pos);
+                }
+                function getCursorPos(e) {
+                  var a, x = 0;
+                  e = (e.changedTouches) ? e.changedTouches[0] : e;
+                  /*get the x positions of the image:*/
+                  a = img.getBoundingClientRect();
+                  /*calculate the cursor's x coordinate, relative to the image:*/
+                  x = e.pageX - a.left;
+                  /*consider any page scrolling:*/
+                  x = x - window.pageXOffset;
+                  return x;
+                }
+                function slide(x) {
+                  /*resize the image:*/
+                  img.style.width = x + "px";
+                  /*position the slider:*/
+                  slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+                }
+              }
+            }
+            </script>
+            </head>
+            <body>
+            
+            
+            <p> <strong>    Compare the two images:</strong> Click and slide the blue slider to observe the change over time:</p>
+            
+            <div class="img-comp-container">
+              <div class="img-comp-img">
+                <img src="assets/glacier2017.png" width="1500" height="1000">
+              </div>
+              <div class="img-comp-img img-comp-overlay">
+                <img src="assets/glacier2022.png" width="1500" height="1000">
+              </div>
+            </div>
+            
+            <script>
+            /*Execute a function that will execute an image compare function for each element with the img-comp-overlay class:*/
+            initComparisons();
+            </script>
+            
+            </body>
+            </html>
+
+        
+        <!-- Storybook image description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>ArcGIS</h2>
+                        <p class="lead">I created the map below using ArcGIS. This was a fun project for me to work on and allowed me to practice stylistic map making that didn’t involve data. To create this, I added several layers and adjusted them to create a forced perspective. I was able to work with colors, gradients, hatched lines, filters, and shape and line effects to create a fun watercolor map.
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- Storybook image-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/storybookmap.png');">
+            <!-- Your content goes here -->
+             <div style="height: 50rem"></div>
+        </div>
+
+        
+        <!-- mosquito risk description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- mosquito risk map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/mosquitorisk.png'); background-size: 90% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+
+        <!-- dropoff description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- ballot dropoff map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/votingdropbox.png'); background-size: 90% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+
+
+        <!-- heat change map description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- change in heat map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/changeinheat.png'); background-size: 90% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+
+        <!-- co2 description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- co2 map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/co2map.png'); background-size: 90% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+
+
+        <!-- traffic description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- traffic map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/trafficflowgraph.png');  background-size: 90% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+
+        <!-- caphill description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- sky map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/skyinfo.png');  background-size: 90% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+
+        <!-- sky description-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>En Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        
+        <!-- caphill map-->
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/caphillinfo.png');  background-size: 60% auto;">
+            <!-- Your content goes here -->
+             <div style="height: 60rem"></div>
+        </div>
+            
+
+        <!-- Content section 1-->
+        <section class="py-5">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <h2>End Background Images</h2>
+                        <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
+                        <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <div class="py-5 bg-image-full" style="background-image: url('assets/storybookmap.png');">
+            <!-- Your content goes here -->
+            <div style="height: 50rem"></div>
         </div>
         <!-- Content section 1-->
         <section class="py-5">
             <div class="container my-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <h2>Engaging Background Images</h2>
+                        <h2>En Background Images</h2>
                         <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
                         <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
                     </div>
@@ -64,16 +802,16 @@
             </div>
         </section>
         <!-- Image 2-->
-        <div class="py-5 bg-image-full" style="background-image: url('https://source.unsplash.com/4ulffa6qoKA/1200x800')">
-            <!-- Put anything you want here! The spacer below with inline CSS is just for demo purposes!-->
-            <div style="height: 20rem"></div>
+        <div class="py-5 bg-image-full" style="background-image: url('assets/storybookmap.png');">
+            <!-- Your content goes here -->
+            <div style="height: 50rem"></div>
         </div>
         <!-- Content section 2-->
         <section class="py-5">
             <div class="container my-5">
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <h2>Engaging Background Images</h2>
+                        <h2>EngBackground Images</h2>
                         <p class="lead">The background images used in this template are sourced from Unsplash and are open source and free to use.</p>
                         <p class="mb-0">I can't tell you how many people say they were turned off from science because of a science teacher that completely sucked out all the inspiration and enthusiasm they had for the course.</p>
                     </div>
