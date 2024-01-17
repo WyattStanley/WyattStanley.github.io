@@ -13,6 +13,12 @@ Linkedin: http://www.linkedin.com/in/wyattstanley
 
 I am a seniorr, majoring in <a href="https://geography.washington.edu">Geography</a> Data Science at the University of Washington.
 
+<p>Here is a quote from the UW Geography Department which explains what UW geography is all about.</p>
+
+<blockquote cite="http://www.worldwildlife.org/who/index.html">
+"At the UW, Geography goes far beyond maps and place names. We explore the myriad connections between people and their environments. With strengths in both spatial technologies and human geography, our students and faculty leverage cutting-edge tools and techniques to tackle the world’s most urgent challenges – from economic inequality to climate change to health inequities.."
+</blockquote>
+
 # Work Experience
 - Trader Joes
 - Agua Verde Cafe
@@ -40,3 +46,7 @@ I am a seniorr, majoring in <a href="https://geography.washington.edu">Geography
 - Teamwork
 - Exercise
 - Fun
+
+
+
+
