@@ -1,0 +1,29 @@
+﻿X,Y,OBJECTID,NAME,ADDRESS,SPECIAL,SHELTER,SE_ANNO_CAD_DATA,LABEL,WEBSITE,GlobalID
+-122.356032042,47.723004173,1,BROADVIEW,12755 GREENWOOD AVE N, ,1,,Broadview,https://www.spl.org/hours-and-locations/broadview-branch,{4EF83A3E-444C-412A-97AF-49CB23CCD601}
+-122.29808701,47.719861028,2,LAKE CITY,12501 28TH AVE NE, ,1,,Lake City,https://www.spl.org/hours-and-locations/lake-city-branch,{8ABAE9D2-5485-480D-B763-769C5A468DE9}
+-122.401343582,47.645316101,3,MAGNOLIA,2801 34TH AVE W, ,1,,Magnolia,https://www.spl.org/hours-and-locations/magnolia-branch,{5CF7B63F-F93F-469A-B4B5-8B4C5138E3A1}
+-122.362744476,47.633781297,4,QUEEN ANNE,400 W GARFIELD ST, ,1,,Queen Anne,https://www.spl.org/hours-and-locations/queen-anne-branch,{150F213F-497B-488B-A440-8EE65C4778E0}
+-122.348399924,47.6500678950001,5,FREMONT,731 N 35TH ST, ,1,,Fremont,https://www.spl.org/hours-and-locations/fremont-branch,{EA62407A-5257-432E-B033-FF919FF6DAD0}
+-122.32671674,47.681500784,6,GREEN LAKE,7364 E GREEN LAKE DR N, ,1,,Green Lake,https://www.spl.org/hours-and-locations/green-lake-branch,{905EFEDD-0A44-432D-B24D-133030DBBEA1}
+-122.354964536,47.687497056,7,GREENWOOD,8016 GREENWOOD AVE N, ,1,,Greenwood,https://www.spl.org/hours-and-locations/greenwood-branch,{E2833970-CDBB-47F6-B0E0-233384876BE1}
+-122.317868192,47.66523619,8,UNIVERSITY,5009 ROOSEVELT WY NE, ,1,,University,https://www.spl.org/hours-and-locations/university-branch,{70CB105C-87EC-4AB3-9B03-0F5DC596E890}
+-122.290014065,47.6126741850001,9,MADRONA-SALLY GOLDMARK,1134 33RD AVE, ,1,,Madrona-Sally Goldmark,https://www.spl.org/hours-and-locations/madrona-sally-goldmark-branch,{1FE6C270-079D-42D6-82C1-6077FBBBA0B1}
+-122.302393903,47.6405657180001,10,MONTLAKE,2401 24TH AVE E, ,1,,Montlake,https://www.spl.org/hours-and-locations/montlake-branch,{C3F89CF3-02C6-42AB-A5E7-802F3423B0F0}
+-122.290711289,47.6778536840001,11,NORTHEAST,6801 35TH AVE NE, ,1,,Northeast,https://www.spl.org/hours-and-locations/northeast-branch,{A35DE05B-979E-4B59-B0C2-15C3976E5A2B}
+-122.376182399,47.522441773,12,SOUTHWEST,9010 35TH AVE SW, ,1,,Southwest,https://www.spl.org/hours-and-locations/southwest-branch,{68E90A59-0FED-4A05-8E74-796B28B798A7}
+-122.384757453,47.582694836,13,WEST SEATTLE,2306 42ND AVE SW, ,1,,West Seattle,https://www.spl.org/hours-and-locations/west-seattle-branch,{3DA9C554-702E-4409-8070-3F8EB912273D}
+-122.311407091,47.5780458990001,14,BEACON HILL,2821 BEACON AVE S, ,1,,Beacon Hill,https://www.spl.org/hours-and-locations/beacon-hill-branch,{2A9FBAE2-190A-4BAB-9CD9-D1986E46DAB2}
+-122.286879245,47.5599471690001,15,COLUMBIA,4721 RAINIER AVE S, ,1,,Columbia,https://www.spl.org/hours-and-locations/columbia-branch,{D04EBD62-7599-41B6-924C-5E905234E13F}
+-122.270465116,47.521356231,16,RAINIER BEACH,9125 RAINIER AVE S, ,1,,Rainier Beach,https://www.spl.org/hours-and-locations/rainier-beach-branch,{E3A92736-D127-43EA-B836-DE1430E9ACFE}
+-122.339104421,47.661173686,18,WALLINGFORD,1501 N 45TH ST, ,1,,Wallingford,https://www.spl.org/hours-and-locations/wallingford-branch,{4C34B878-44B8-457D-8EAB-07407FD67456}
+-122.30183158,47.601903211,19,DOUGLASS-TRUTH,2300 E YESLER WAY, ,1,,Douglass-Truth,https://www.spl.org/hours-and-locations/douglass-truth-branch,{FF4E1D63-297B-44F5-97D8-A2D90D3A6528}
+-122.322451452,47.622913979,20,CAPITOL HILL,425 HARVARD AVE E, ,1,,Capitol Hill,https://www.spl.org/hours-and-locations/capitol-hill-branch,{2D710738-D79E-4A79-905A-934B9B235EB7}
+-122.290951179,47.538993803,21,NEWHOLLY,7058 32ND AVE S, ,1,,NewHolly,https://www.spl.org/hours-and-locations/newholly-branch,{6A70BB9E-9C91-489F-B126-5DF298DE2899}
+-122.375813894,47.548041568,22,HIGH POINT,3411 SW RAYMOND ST, ,1,,High Point,https://www.spl.org/hours-and-locations/high-point-branch,{DD7AD75A-EA9F-4B42-95B0-AF9A7810248B}
+-122.332968269,47.6064852810001,23,CENTRAL,1000 4TH AVE, ,0,,Central,https://www.spl.org/hours-and-locations/central-library,{AED7E433-BCC9-4257-A726-B167FC8C7C08}
+-122.363318628,47.5530473960001,24,DELRIDGE,5423 DELRIDGE WAY SW, ,1,,Delridge,https://www.spl.org/hours-and-locations/delridge-branch,{B7A22E29-E7F4-44CB-86BA-BFA19BE32788}
+-122.322677489,47.706193279,25,NORTHGATE,10548 5TH AVE NE, ,0,,Northgate,https://www.spl.org/hours-and-locations/northgate-branch,{A0BF4751-49D7-4737-9832-971839D5EB36}
+-122.337024779,47.616803874,26,MOBILE SERVICES,2025 9TH AVE,X,0,,,https://www.spl.org/programs-and-services/outreach/mobile-library-services,{5FF2B064-84DA-49EE-9BB0-995E3F285554}
+-122.322834231,47.5962491240001,27,INTL. DISTRICT / CHINATOWN,713 8TH AVE S, ,0,,Intl District / Chinatown,https://www.spl.org/hours-and-locations/international-district-chinatown-branch,{23B2E198-86AA-403C-908A-6C6A338FEE87}
+-122.384203804,47.669843203,28,BALLARD,5614 22ND AVE NW, ,1,,Ballard,https://www.spl.org/hours-and-locations/ballard-branch,{B0C0D4E0-EC38-4735-8916-53638AC56F5D}
+-122.322591182,47.5262651630001,29,SOUTH PARK,8604 8TH AVE S, ,0,,South Park,https://www.spl.org/hours-and-locations/south-park-branch,{A758AA93-00B5-4FA0-AF7B-0AB95F4DF64B}

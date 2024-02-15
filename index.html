@@ -51,202 +51,6 @@
             </div>
         </section>
 
-        <!-- Interactive map 1
-
-        <head>
-            <meta charset="utf-8">
-            <title>Interactive Web Mapping</title>
-            <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
-            <link href="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.css" rel="stylesheet">
-            <script src="https://api.mapbox.com/mapbox-gl-js/v2.5.0/mapbox-gl.js"></script>
-            <style>
-                h2, h3 {
-                    margin: 10px;
-                    font-size: 18px;
-                }
-
-                h3 {
-                    font-size: 16px;
-                }
-
-                p {
-                    margin: 10px;
-                }
-
-                #map {
-                    position: relative;
-                    top: 0;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    width: 100%;
-                }
-
-                .map-overlay {
-                    position: relative;
-                    bottom: 0;
-                    left: 0;
-                    background: rgba(255, 255, 255, 0.8);
-                    border-style: solid;
-                    border-width: 1px;
-                    border-color: rgba(0, 0, 0, 0.2);
-                    margin-left: 20px;
-                    font-family: Arial, sans-serif;
-                    overflow: auto;
-                    border-radius: 3px;
-                }
-
-                #features {
-                    top: 0;
-                    height: 100px;
-                    margin-top: 20px;
-                    width: 250px;
-                }
-
-                #legend {
-                    padding: 10px;
-                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-                    line-height: 18px;
-                    height: 210px;
-                    margin-bottom: 40px;
-                    width: 150px;
-                }
-
-                .legend-key {
-                    display: inline-block;
-                    border-radius: 20%;
-                    width: 10px;
-                    height: 10px;
-                    margin-right: 5px;
-                }
-
-                .mapboxgl-canvas-container.mapboxgl-interactive,
-                .mapboxgl-ctrl-group button.mapboxgl-ctrl-compass {
-                    cursor: unset;
-                }
-            </style>
-        </head>
-
-        <body>
-            <div id="map"></div>
-            <div class='map-overlay' id='features'>
-                <h2>US population density</h2>
-                <div id='text-description'>
-                    <p>Hover over a state!</p>
-                </div>
-            </div>
-            <div class='map-overlay' id='legend'></div>
-            <script>
-                // initialize basemmap
-                mapboxgl.accessToken =
-                    'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
-                const map = new mapboxgl.Map({
-                    container: 'map', // container ID
-                    style: 'mapbox://styles/mapbox/light-v10', // style URL
-                    zoom: 3, // starting zoom
-                    center: [-100, 40] // starting center
-                });
-
-                // load data and add as layer
-                async function geojsonFetch() {
-                    let response = await fetch('assets/state_data.geojson');
-                    let state_data = await response.json();
-
-                    map.on('load', function loadingData() {
-                        map.addSource('state_data', {
-                            type: 'geojson',
-                            data: state_data
-                        });
-
-                        map.addLayer({
-                            'id': 'state_data_layer',
-                            'type': 'fill',
-                            'source': 'state_data',
-                            'paint': {
-                                'fill-color': [
-                                    'step',
-                                    ['get', 'density'],
-                                    '#FFEDA0',   // stop_output_0
-                                    10,          // stop_input_0
-                                    '#FED976',   // stop_output_1
-                                    20,          // stop_input_1
-                                    '#FEB24C',   // stop_output_2
-                                    50,          // stop_input_2
-                                    '#FD8D3C',   // stop_output_3
-                                    100,         // stop_input_3
-                                    '#FC4E2A',   // stop_output_4
-                                    200,         // stop_input_4
-                                    '#E31A1C',   // stop_output_5
-                                    500,         // stop_input_5
-                                    '#BD0026',   // stop_output_6
-                                    1000,        // stop_input_6
-                                    "#800026"    // stop_output_7
-                                ],
-                                'fill-outline-color': '#BBBBBB',
-                                'fill-opacity': 0.7,
-                            }
-                        });
-
-                        const layers = [
-                            '0-9',
-                            '10-19',
-                            '20-49',
-                            '50-99',
-                            '100-199',
-                            '200-499',
-                            '500-999',
-                            '1000 and more'
-                        ];
-                        const colors = [
-                            '#FFEDA070',
-                            '#FED97670',
-                            '#FEB24C70',
-                            '#FD8D3C70',
-                            '#FC4E2A70',
-                            '#E31A1C70',
-                            '#BD002670',
-                            '#80002670'
-                        ];
-
-                        // legend
-                        const legend = document.getElementById('legend');
-                        legend.innerHTML = "<b>Population Density<br>(people/sq.mi.)</b><br><br>";
-
-
-                        layers.forEach((layer, i) => {
-                            const color = colors[i];
-                            const item = document.createElement('div');
-                            const key = document.createElement('span');
-                            key.className = 'legend-key';
-                            key.style.backgroundColor = color;
-
-                            const value = document.createElement('span');
-                            value.innerHTML = `${layer}`;
-                            item.appendChild(key);
-                            item.appendChild(value);
-                            legend.appendChild(item);
-                        });
-                    });
-
-                    map.on('mousemove', ({point}) => {
-                        const state = map.queryRenderedFeatures(point, {
-                            layers: ['state_data_layer']
-                        });
-                        document.getElementById('text-description').innerHTML = state.length ?
-                            `<h3>${state[0].properties.name}</h3><p><strong><em>${state[0].properties.density}</strong> people per square mile</em></p>` :
-                            `<p>Hover over a state!</p>`;
-                    });
-                }
-
-                // GeoJSON data and load the map
-                geojsonFetch();
-            </script>
-
-        </body> -->
-
-    
-        <!-- Interactive map 1 -->
-
         <head>
             <meta charset="utf-8">
             <title>Active Volcanos</title>
@@ -778,8 +582,292 @@
             <!-- Your content goes here -->
              <div style="height: 60rem"></div>
         </div>
-            
-      
+
+        
+        <!-- tiles -->
+
+
+        <!-- <head>
+            <title>Map Tiles</title>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.css" rel="stylesheet">
+        
+            <style>
+                body {
+                    margin: 0;
+                    padding: 0;
+                }
+        
+                #map2 {
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    width: 100%;
+                }
+        
+                /* the style of the layer control menu */
+                #menu {
+                    background: #fff;
+                    position: absolute;
+                    z-index: 1;
+                    top: 10px;
+                    right: 10px;
+                    border-radius: 3px;
+                    width: 120px;
+                    border: 1px solid rgba(0, 0, 0, 0.4);
+                    font-family: 'Open Sans', sans-serif;
+                }
+                
+        
+                /* each layer on the menu */
+                #menu a {
+                    font-size: 13px;
+                    color: #404040;
+                    display: block;
+                    margin: 0;
+                    padding: 0;
+                    padding: 10px;
+                    text-decoration: none;
+                    border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+                    text-align: center;
+                }
+        
+                /* the last item of the layer items will not include a seperator */
+                #menu a:last-child {
+                    border: none;
+                }
+        
+                /* change color and background color while a pointer is on an hybrid link. */
+                #menu a:hover {
+                    background-color: #f8f8f8;
+                    color: #404040;
+                }
+        
+                #menu a.active {
+                    background-color: #3887be;
+                    color: #ffffff;
+                }
+        
+                #menu a.active:hover {
+                    background: #3074a4;
+                }
+        
+                #description {
+                    position: absolute;
+                    z-index: 1;
+                    bottom: 30px;
+                    left: 10px;
+                    background: rgba(255, 255, 255, 0.8);
+                    padding: 10px;
+                    border-radius: 3px;
+                    width: 200px;
+                }
+        
+            </style>
+            <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.1/mapbox-gl.js"></script>
+        </head>
+        
+        <body>
+            <div id="description2">Click on map option in top right corner.</div>
+            <nav id="menu2"></nav>
+            <div id='map2'></div>
+            <script type="text/javascript">
+                mapboxgl.accessToken =
+                    'pk.eyJ1IjoiamFrb2J6aGFvIiwiYSI6ImNpcms2YWsyMzAwMmtmbG5icTFxZ3ZkdncifQ.P9MBej1xacybKcDN_jehvw';
+                let map2 = new mapboxgl.Map({
+                    container: 'map2', // container ID
+                    style: 'mapbox://styles/mapbox/dark-v10',
+                    zoom: 10.5, // starting zoom
+                    center: [-122.32, 47.6002614] // starting center
+                });
+        
+                map2.addControl(new mapboxgl.NavigationControl(), 'top-left');
+        
+        
+                map2.on('load', () => { //simplifying the function statement: arrow with brackets to define a function
+        
+                    const descriptions = {
+                        'Basic': 'This map is a custom basemap created in Mapbox.',
+                        'Library': 'This map shows the locations of Public Libraries in Seattle. Data: Seattle City GIS.',
+                        'LibraryBasic': 'This map shows the Library data on top of the custom Mapbox basemap. Data: Seattle City GIS.',
+                        'Hospitals': 'This map shows all hospitals locations in the Seattle Area. Data: Seattle City GIS.'
+                    };
+        
+        
+                    map2.addSource('Basic-tiles', {
+                        'type': 'raster',
+                        'tiles': [
+                            'assets/tiles/Basic/{z}/{x}/{y}.png'
+                        ],
+                        'tileSize': 256,
+                        'attribution': 'Map tiles designed by Wyatt Stanley</a>'
+                    });
+        
+                    map2.addSource('Library-tiles', {
+                        'type': 'raster',
+                        'tiles': [
+                            'assets/tiles/Library/{z}/{x}/{y}.png'
+                        ],
+                        'tileSize': 256,
+        
+                        'attribution': 'Map tiles designed by Wyatt Stanley'
+                    });
+        
+                    map2.addSource('LibraryBasic-tiles', {
+                        'type': 'raster',
+                        'tiles': [
+                            'assets/tiles/LibraryBasic/{z}/{x}/{y}.png'
+                        ],
+                        'tileSize': 256,
+        
+                        'attribution': 'Map tiles designed by Wyatt Stanley'
+                    });
+        
+                    map2.addSource('Hospitals-tiles', {
+                        'type': 'raster',
+                        'tiles': [
+                            'assets/Hospitals/{z}/{x}/{y}.png'
+                        ],
+                        'tileSize': 256,
+        
+                        'attribution': 'Map tiles designed by Wyatt Stanley'
+                    });
+        
+                    map2.addLayer({
+                        'id': 'Basic',
+                        'type': 'raster',
+                        'layout': {
+                            'visibility': 'none'
+                        },
+                        'source': 'Basic-tiles'
+                    });
+        
+                    map2.addLayer({
+                        'id': 'Library',
+                        'type': 'raster',
+                        'layout': {
+                            'visibility': 'none'
+                        },
+                        'source': 'Library-tiles'
+                    });
+        
+                    map2.addLayer({
+                        'id': 'LibraryBasic',
+                        'type': 'raster',
+                        'layout': {
+                            'visibility': 'none'
+                        },
+                        'source': 'LibraryBasic-tiles'
+                    });
+        
+                    map2.addLayer({
+                        'id': 'Hospitals',
+                        'type': 'raster',
+                        'layout': {
+                            'visibility': 'none'
+                        },
+                        'source': 'Hospitals-tiles'
+                    });
+        
+        
+                    map2.on('idle', () => {
+                        const visibleLayers = map.getStyle().layers.filter(layer => map.getLayoutProperty(layer.id, 'visibility') === 'visible');
+                        const visibleLayerId = visibleLayers[0].id; // Assuming only one layer is visible at a time
+                        document.getElementById('description2').textContent = descriptions[visibleLayerId];
+                    });
+        
+                    // Toggle layer visibility when clicking on the layer menu
+                    document.getElementById('menu').addEventListener('click', function(e) {
+                        const layerId = e.target.textContent;
+                        const visibility = map2.getLayoutProperty(layerId, 'visibility');
+                        map2.setLayoutProperty(layerId, 'visibility', visibility === 'visible' ? 'none' : 'visible');
+                    });
+        
+        
+                });
+        
+                
+        
+        
+                // After the last frame rendered before the map enters an "idle" state.
+                map2.on('idle', () => {
+                    // If these two layers were not added to the map, abort
+                    if (!map2.getLayer('Basic') || !map2.getLayer('Library') || !map2.getLayer('LibraryBasic') || !map2.getLayer('Hospitals')) {
+                        return;
+                    }
+        
+                    // Enumerate ids of the layers.
+                    const toggleableLayerIds = ['Basic', 'Library', 'LibraryBasic', 'Hospitals'];
+        
+                    // Set up the corresponding toggle button for each layer.
+                    for (const id of toggleableLayerIds) {
+                        // Skip layers that already have a button set up.
+                        if (document.getElementById(id)) {
+                            continue;
+                        }
+        
+                        // Create a link.
+                        const link = document.createElement('a');
+                        link.id = id;
+                        link.href = '#';
+                        link.textContent = id;
+                        link.className = 'inactive';
+        
+                        // Show or hide layer when the toggle is clicked.
+                        link.onclick = function (e) {
+                            const clickedLayer = this.textContent;
+                            // preventDefault() tells the user agent that if the event does not get explicitly handled, 
+                            // its default action should not be taken as it normally would be.
+                            e.preventDefault();
+                            // The stopPropagation() method prevents further propagation of the current event in the capturing 
+                            // and bubbling phases. It does not, however, prevent any default behaviors from occurring; 
+                            // for instance, clicks on links are still processed. If you want to stop those behaviors, 
+                            // see the preventDefault() method.
+                            e.stopPropagation();
+        
+                            const visibility = map2.getLayoutProperty(
+                                clickedLayer,
+                                'visibility'
+                            );
+        
+                            // Toggle layer visibility by changing the layout object's visibility property.
+                            // if it is currently visible, after the clicking, it will be turned off.
+                            if (visibility === 'visible') {
+                                map2.setLayoutProperty(clickedLayer, 'visibility', 'none');
+                                this.className = '';
+                            } else { //otherise, it will be turned on.
+                                this.className = 'active';
+                                map2.setLayoutProperty(
+                                    clickedLayer,
+                                    'visibility',
+                                    'visible'
+                                );
+                            }
+                        };
+        
+                        // in the menu place holder, insert the layer links.
+                        const layers = document.getElementById('menu');
+                        layers.appendChild(link);
+                    }
+                });
+            </script>
+        </body> -->
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         <!-- Footer-->
         <footer class="py-5 bg-dark">
             <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2023</p></div>
@@ -788,5 +876,16 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme JS-->
         <script src="js/scripts.js"></script>
+
+
+
+    
+    
+    
+    
+    
+    
     </body>
+
+
 </html>
